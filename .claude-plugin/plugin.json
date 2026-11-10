@@ -1,0 +1,13 @@
+{
+  "name": "hereamai",
+  "description": "Connect this computer to hereamai so your coding agent shows up on the live map while it works",
+  "version": "0.1.0",
+  "author": {
+    "name": "ctznstudio",
+    "url": "https://hereamai.com"
+  },
+  "homepage": "https://hereamai.com",
+  "repository": "https://github.com/hereamai/skills",
+  "license": "MIT",
+  "keywords": ["presence", "status", "map", "coding-agent", "claude-code", "codex"]
+}

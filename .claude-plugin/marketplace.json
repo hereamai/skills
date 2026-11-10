@@ -1,0 +1,15 @@
+{
+  "name": "hereamai",
+  "description": "hereamai: a live world map of people working with coding agents",
+  "owner": {
+    "name": "ctznstudio",
+    "url": "https://hereamai.com"
+  },
+  "plugins": [
+    {
+      "name": "hereamai",
+      "source": "./",
+      "description": "Connect this computer to hereamai so your coding agent shows up on the live map while it works"
+    }
+  ]
+}
