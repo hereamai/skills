@@ -74,4 +74,4 @@ If a command says the computer was disconnected or is not connected yet, offer t
 
 ## What is sent
 
-Hooks send only: the event type (start, activity, heartbeat, stop, end), the agent name, a random project ID, and, if the user turned it on, token counts per model. The project ID is made on this computer from a secret that never leaves it, so the server can't tell which folder it is. Prompts, responses, file paths, project names and code are never sent. The map shows the user's country only, never a city. Sessions, usage and settings are on the web at https://hereamai.com.
+Hooks send only: the event type (start, activity, heartbeat, stop, end), the agent name, a random project ID, and, only if the user turned them on, token counts per model and the project folder name (one word, shown only to the user in their session list). The project ID is made on this computer from a secret that never leaves it, so the server can't tell which folder it is. Prompts, responses, file paths and code are never sent. The map shows the user's country only, never a city. Sessions, usage and settings are on the web at https://hereamai.com.
