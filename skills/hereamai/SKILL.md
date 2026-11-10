@@ -1,6 +1,6 @@
 ---
 name: hereamai
-description: Connect this computer to hereamai (hereamai.com), a live world map of people working with coding agents, so the user shows up on the map while their agent works. Use when the user mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, or update their status by hand. Runs the `npx hereamai` CLI.
+description: Connect this computer to hereamai (hereamai.com), a live world map of people working with coding agents, so the user shows up on the map while their agent works. Use when the user mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, or asks how many people are working with coding agents right now (on hereamai or around the world). Runs the `npx hereamai` CLI.
 ---
 
 # hereamai
@@ -22,6 +22,16 @@ npx hereamai@latest login
 - First-time users set a nickname and country in the browser before the CLI finishes.
 - To name the computer without a prompt: `npx hereamai@latest login --name "<name>"`.
 - Codex runs new hooks only after the user trusts them once in `/hooks`. Pass that on if the CLI prints it.
+
+## See who is working right now
+
+Run when the user asks how many people are working with coding agents right now, or which countries are busiest. It needs no account and sends nothing about the user.
+
+```bash
+npx hereamai@latest now
+```
+
+It prints the number of people working now, a bar chart of the busiest countries, and the map address. Show the output to the user as it is, inside a code block, so the bars line up. Do not redraw the chart or add names: the CLI shows counts only, and names are visible only on the web map after signing in.
 
 ## Other commands
 
