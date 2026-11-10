@@ -1,6 +1,6 @@
 ---
 name: hereamai
-description: Connect this computer to hereamai (hereamai.com), a live world map of people working with coding agents, so the user shows up on the map while their agent works. Use when the user mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, or asks how many people are working with coding agents right now (on hereamai or around the world). Runs the `npx hereamai` CLI.
+description: Connect this computer to hereamai (hereamai.com), a live world map of people working with coding agents, so the user shows up on the map while their agent works. Use when the user mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, asks how much they used their coding agents this week (tokens, cost, time), or asks how many people are working with coding agents right now (on hereamai or around the world). Runs the `npx hereamai` CLI.
 ---
 
 # hereamai
@@ -23,6 +23,16 @@ npx hereamai@latest login
 - To name the computer without a prompt: `npx hereamai@latest login --name "<name>"`.
 - Codex runs new hooks only after the user trusts them once in `/hooks`. Pass that on if the CLI prints it.
 
+## See the user's week
+
+Run when the user asks how much they used their coding agents recently: tokens, estimated cost, time working, sessions, which models. Needs a connected computer.
+
+```bash
+npx hereamai@latest week
+```
+
+`--period today` (by hour) or `--period 30d` change the range. Show the output to the user as it is, inside a code block. The cost is what the same tokens would cost at public API prices, not a subscription bill; say so if the user asks about money. If it says token counting is off, the user can turn it on at the address it prints.
+
 ## See who is working right now
 
 Run when the user asks how many people are working with coding agents right now, or which countries are busiest. It needs no account and sends nothing about the user.
@@ -33,6 +43,22 @@ npx hereamai@latest now
 
 It prints the number of people working now, a bar chart of the busiest countries, and the map address. Show the output to the user as it is, inside a code block, so the bars line up. Do not redraw the chart or add names: the CLI shows counts only, and names are visible only on the web map after signing in.
 
+## Show hereamai in Claude Code's status line
+
+Only when the user asks. Works in Claude Code only.
+
+```bash
+npx hereamai@latest statusline
+```
+
+- If the user has no status line yet, this installs one and you are done. It shows how many people are working now and, when connected, the user's tokens, cost and time today.
+- If the user already has a status line, the command changes nothing and prints their current command. Then offer to combine them:
+  1. Read the status line command or script it printed (for a script file, open it).
+  2. Propose a change that keeps their output and appends hereamai's, e.g. ` · $(node ~/.hereamai/statusline.js < /dev/null)` at the end of their line. Keep `< /dev/null` so it doesn't consume the JSON their script reads from stdin. Show the exact diff.
+  3. Edit only after the user says yes. Never replace their status line. Keep a copy of the original script next to it (e.g. `<name>.bak`).
+- `node ~/.hereamai/statusline.js` reads only a local cache and prints one line; it is safe to call from another script (with `< /dev/null`). It never sends the status line input (folders, transcript paths).
+- To undo: `npx hereamai@latest statusline off` removes only hereamai's own status line. If you merged it into the user's script, remove the line you added.
+
 ## Other commands
 
 | User wants to | Run |
@@ -41,10 +67,11 @@ It prints the number of people working now, a bar chart of the busiest countries
 | Show up as working now, with an agent that has no hooks | `npx hereamai@latest status --agent other:<agent-name>` |
 | Re-detect agents and install hooks again | `npx hereamai@latest setup` |
 | Disconnect this computer (hooks stay installed) | `npx hereamai@latest logout` |
-| Remove the hereamai hooks | `npx hereamai@latest uninstall` |
+| Remove that status line | `npx hereamai@latest statusline off` |
+| Remove the hereamai hooks (and its status line) | `npx hereamai@latest uninstall` |
 
 If a command says the computer was disconnected or is not connected yet, offer to run `login` again.
 
 ## What is sent
 
-Hooks send only: the event type (start, activity, heartbeat, stop, end), the agent name, the agent's session ID, and, if the user turned it on, token counts per model. Prompts, responses, file paths and code are never sent. The map shows the user's country only, never a city. Sessions, usage and settings are on the web at https://hereamai.com.
+Hooks send only: the event type (start, activity, heartbeat, stop, end), the agent name, a random project ID, and, if the user turned it on, token counts per model. The project ID is made on this computer from a secret that never leaves it, so the server can't tell which folder it is. Prompts, responses, file paths, project names and code are never sent. The map shows the user's country only, never a city. Sessions, usage and settings are on the web at https://hereamai.com.
