@@ -40,7 +40,11 @@ Then ask your agent: "connect me to hereamai", or "how many people are coding wi
 npx hereamai login
 ```
 
-The CLI is on npm as [`hereamai`](https://www.npmjs.com/package/hereamai).
+The CLI is on npm as [`hereamai`](https://www.npmjs.com/package/hereamai). Its source ships inside the npm package (MIT).
+
+## Problems and requests
+
+Open an issue in this repository, for the skill or the CLI.
 
 ## License
 

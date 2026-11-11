@@ -1,6 +1,6 @@
 ---
 name: hereamai
-description: Connect this computer to hereamai (hereamai.com), a live world map of people working with coding agents, so the user shows up on the map while their agent works. Use when the user mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, asks how much they used their coding agents this week (tokens, cost, time), or asks how many people are working with coding agents right now (on hereamai or around the world). Runs the `npx hereamai` CLI.
+description: Connect this computer to hereamai (hereamai.com), a live world map of people working with coding agents, so the user shows up on the map while their agent works. Use when the user mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, asks how much they used their coding agents this week (tokens, cost, time), asks how many people are working with coding agents right now (on hereamai or around the world), or wants to see, rename or reset the project names in their hereamai session list (e.g. "a session shows up as src"). Runs the `npx hereamai` CLI.
 ---
 
 # hereamai
@@ -59,13 +59,29 @@ npx hereamai@latest statusline
 - `node ~/.hereamai/statusline.js` reads only a local cache and prints one line; it is safe to call from another script (with `< /dev/null`). It never sends the status line input (folders, transcript paths).
 - To undo: `npx hereamai@latest statusline off` removes only hereamai's own status line. If you merged it into the user's script, remove the line you added.
 
+## Project names
+
+Only if the user turned on "Show project names" in the web settings (Usage tab). Each project keeps the first name it got: the git repository folder, or the working folder when there is no repository. A project outside git that was opened from a subfolder can end up with a name like `src`.
+
+```bash
+npx hereamai@latest projects
+```
+
+It lists the names on this computer with the agent, the last day used and a short ID. Then:
+
+- Rename: `npx hereamai@latest projects rename <current name> <new name>`. This also renames that project's past sessions on the web, and later signals keep the new name.
+- Back to the automatic name: `npx hereamai@latest projects reset <current name>`.
+- If several projects have the same name, the command lists them and changes nothing. Ask the user which one, then use its ID (`p_…` from the list) instead of the name, or `--all` if they mean all of them.
+- If the name isn't in the list (the project hasn't sent a signal since the CLI was updated), the user can rename it on the web: open the session in https://hereamai.com/me and press "Rename project".
+- If it says project names are off, pass on the settings address it prints. Never edit `~/.hereamai/project-names.json` by hand.
+
 ## Other commands
 
 | User wants to | Run |
 | --- | --- |
 | See which account this computer is connected to | `npx hereamai@latest whoami` |
 | Show up as working now, with an agent that has no hooks | `npx hereamai@latest status --agent other:<agent-name>` |
-| Re-detect agents and install hooks again | `npx hereamai@latest setup` |
+| Re-detect agents and install hooks again (also updates the hook script) | `npx hereamai@latest setup` |
 | Disconnect this computer (hooks stay installed) | `npx hereamai@latest logout` |
 | Remove that status line | `npx hereamai@latest statusline off` |
 | Remove the hereamai hooks (and its status line) | `npx hereamai@latest uninstall` |
@@ -74,4 +90,4 @@ If a command says the computer was disconnected or is not connected yet, offer t
 
 ## What is sent
 
-Hooks send only: the event type (start, activity, heartbeat, stop, end), the agent name, a random project ID, and, only if the user turned them on, token counts per model and the project folder name (one word, shown only to the user in their session list). The project ID is made on this computer from a secret that never leaves it, so the server can't tell which folder it is. Prompts, responses, file paths and code are never sent. The map shows the user's country only, never a city. Sessions, usage and settings are on the web at https://hereamai.com.
+Hooks send only: the event type (start, activity, heartbeat, stop, end), the agent name, a random project ID, and, only if the user turned them on, token counts per model and the project folder name (one word, fixed per project, shown only to the user in their session list). The project ID is made on this computer from a secret that never leaves it, so the server can't tell which folder it is. Prompts, responses, file paths and code are never sent. The map shows the user's country only, never a city. Sessions, usage and settings are on the web at https://hereamai.com.
