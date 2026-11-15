@@ -1,6 +1,6 @@
 ---
 name: hereamai
-description: Show how many people are working with coding agents right now on hereamai (hereamai.com), a live world map of people working with coding agents. No account or login is needed for that. Also connects this computer to hereamai so the user shows up on the map while their agent works. Use when the user asks how many people are working with coding agents right now (on hereamai or around the world) or which countries are busiest, mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, asks how much they used their coding agents this week (tokens, cost, time), or wants to see, rename or reset the project names in their hereamai session list (e.g. "a session shows up as src"). Runs the `npx hereamai` CLI.
+description: Show how many people are working with coding agents right now on hereamai (hereamai.com), a live world map of people working with coding agents. No account or login is needed for that. Also connects this computer to hereamai so the user shows up on the map while their agent works. Use when the user asks how many people are working with coding agents right now (on hereamai or around the world) or which countries are busiest, mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, asks how much they used their coding agents this week (tokens, cost, time), or wants to add hereamai to their Claude Code status line (e.g. Add hereamai to my status line), or wants to see, rename or reset the project names in their hereamai session list (e.g. "a session shows up as src"). Runs the `npx hereamai` CLI.
 ---
 
 # hereamai
@@ -52,7 +52,7 @@ npx hereamai@latest statusline
 ```
 
 - If the user has no status line yet, this installs one and you are done. It shows how many people are working now (no account needed) and, when connected, the user's time working today. It never shows tokens or cost (for those, use `week`).
-- If the user already has a status line, the command changes nothing and prints their current command. Then offer to combine them:
+- If the user already has a status line, the command changes nothing, prints their current command and tells them to ask you. Then offer to combine them:
   1. Read the status line command or script it printed (for a script file, open it).
   2. Propose a change that keeps their output and appends hereamai's, e.g. ` · $(node ~/.hereamai/statusline.js < /dev/null)` at the end of their line. Keep `< /dev/null` so it doesn't consume the JSON their script reads from stdin. Show the exact diff.
   3. Edit only after the user says yes. Never replace their status line. Keep a copy of the original script next to it (e.g. `<name>.bak`).
