@@ -1,11 +1,21 @@
 ---
 name: hereamai
-description: Connect this computer to hereamai (hereamai.com), a live world map of people working with coding agents, so the user shows up on the map while their agent works. Use when the user mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, asks how much they used their coding agents this week (tokens, cost, time), asks how many people are working with coding agents right now (on hereamai or around the world), or wants to see, rename or reset the project names in their hereamai session list (e.g. "a session shows up as src"). Runs the `npx hereamai` CLI.
+description: Show how many people are working with coding agents right now on hereamai (hereamai.com), a live world map of people working with coding agents. No account or login is needed for that. Also connects this computer to hereamai so the user shows up on the map while their agent works. Use when the user asks how many people are working with coding agents right now (on hereamai or around the world) or which countries are busiest, mentions hereamai, wants to appear on the coding-agent map, share their presence or working status, connect or disconnect this computer, check which hereamai account is connected, update their status by hand, asks how much they used their coding agents this week (tokens, cost, time), or wants to see, rename or reset the project names in their hereamai session list (e.g. "a session shows up as src"). Runs the `npx hereamai` CLI.
 ---
 
 # hereamai
 
-hereamai shows, on a world map, who is working with a coding agent right now. After the user connects a computer once, the agent's hooks send a small signal while it works. Everything runs through the `hereamai` CLI on npm: always call it as `npx hereamai@latest <command>`.
+hereamai shows, on a world map, who is working with a coding agent right now. Anyone can see how many people are working right now without an account (`now` below). After the user connects a computer once, the agent's hooks send a small signal while it works. Everything runs through the `hereamai` CLI on npm: always call it as `npx hereamai@latest <command>`.
+
+## See who is working right now
+
+Run when the user asks how many people are working with coding agents right now, or which countries are busiest. **It needs no account and no login**: don't ask the user to sign up or run `login` first. It sends nothing about the user.
+
+```bash
+npx hereamai@latest now
+```
+
+It prints the number of people working now, a bar chart of the busiest countries, and the map address. On a computer that isn't connected, the last line says how to join (`npx hereamai login`); pass it on as it is and don't push the user to sign up. Show the output to the user as it is, inside a code block, so the bars line up. Do not redraw the chart or add names: the CLI shows counts only, and names are visible only on the web map after signing in.
 
 ## Connect this computer
 
@@ -33,16 +43,6 @@ npx hereamai@latest week
 
 `--period today` (by hour) or `--period 30d` change the range. Show the output to the user as it is, inside a code block. The cost is what the same tokens would cost at public API prices, not a subscription bill; say so if the user asks about money. If it says token counting is off, the user can turn it on at the address it prints.
 
-## See who is working right now
-
-Run when the user asks how many people are working with coding agents right now, or which countries are busiest. It needs no account and sends nothing about the user.
-
-```bash
-npx hereamai@latest now
-```
-
-It prints the number of people working now, a bar chart of the busiest countries, and the map address. Show the output to the user as it is, inside a code block, so the bars line up. Do not redraw the chart or add names: the CLI shows counts only, and names are visible only on the web map after signing in.
-
 ## Show hereamai in Claude Code's status line
 
 Only when the user asks. Works in Claude Code only.
@@ -51,7 +51,7 @@ Only when the user asks. Works in Claude Code only.
 npx hereamai@latest statusline
 ```
 
-- If the user has no status line yet, this installs one and you are done. It shows how many people are working now and, when connected, the user's tokens, cost and time today.
+- If the user has no status line yet, this installs one and you are done. It shows how many people are working now (no account needed) and, when connected, the user's tokens, cost and time today.
 - If the user already has a status line, the command changes nothing and prints their current command. Then offer to combine them:
   1. Read the status line command or script it printed (for a script file, open it).
   2. Propose a change that keeps their output and appends hereamai's, e.g. ` · $(node ~/.hereamai/statusline.js < /dev/null)` at the end of their line. Keep `< /dev/null` so it doesn't consume the JSON their script reads from stdin. Show the exact diff.

@@ -14,7 +14,8 @@ I'm here. So is my AI.
   US  United States   4  ██████████
   JP  Japan           1  ██
 
-Map: https://hereamai.com/map
+Map: https://hereamai.com
+Show up here too: npx hereamai login
 ```
 
 ## Install
