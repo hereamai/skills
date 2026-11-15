@@ -51,7 +51,7 @@ Only when the user asks. Works in Claude Code only.
 npx hereamai@latest statusline
 ```
 
-- If the user has no status line yet, this installs one and you are done. It shows how many people are working now (no account needed) and, when connected, the user's tokens, cost and time today.
+- If the user has no status line yet, this installs one and you are done. It shows how many people are working now (no account needed) and, when connected, the user's time working today. It never shows tokens or cost (for those, use `week`).
 - If the user already has a status line, the command changes nothing and prints their current command. Then offer to combine them:
   1. Read the status line command or script it printed (for a script file, open it).
   2. Propose a change that keeps their output and appends hereamai's, e.g. ` · $(node ~/.hereamai/statusline.js < /dev/null)` at the end of their line. Keep `< /dev/null` so it doesn't consume the JSON their script reads from stdin. Show the exact diff.
